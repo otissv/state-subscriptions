@@ -39,8 +39,8 @@ export function usePublish(...events) {
   return publish(store, ...events);
 }
 
-export function useSubscribe(event) {
-  const store = useStore().current;
+export function useSubscribe(storeRef = {}, event) {
+  const store = storeRef.current;
 
   const [forceUpdate, setForceUpdate] = React.useState(false);
 

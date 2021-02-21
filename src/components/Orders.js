@@ -2,10 +2,11 @@ import React from "react";
 
 import { useSubscribe } from "../hooks";
 import { updateOrderSetter } from "../stateSetters";
+import { useStore } from "../StoreContext";
 
 export function Orders() {
-  const [order, setOrder] = useSubscribe("order").value();
-  const setCup = useSubscribe("order.cup").value()[1];
+  const [order, setOrder] = useSubscribe(useStore(), "order").value();
+  const setCup = useSubscribe(useStore(), "order.cup").value()[1];
 
   function onUpdateOrder() {
     setOrder(

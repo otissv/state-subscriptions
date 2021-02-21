@@ -5,6 +5,7 @@ import App from "./App";
 
 import { createStore } from "./store";
 import { StoreProvider } from "./StoreContext";
+import { NotificationProiver } from "./components/Notifications/NotificationContenxt";
 
 const initialState = {
   count: 0,
@@ -24,12 +25,17 @@ const initialState = {
 };
 
 const store = createStore(initialState);
+const notifications = createStore({
+  notify: []
+});
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
   <StrictMode>
     <StoreProvider store={store}>
-      <App />
+      <NotificationProiver notifications={notifications}>
+        <App />
+      </NotificationProiver>
     </StoreProvider>
   </StrictMode>,
   rootElement

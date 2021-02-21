@@ -1,9 +1,10 @@
 import React from "react";
 
 import { useFetchEffect, useSubscribe } from "../hooks";
+import { useStore } from "../StoreContext";
 
 export function Users() {
-  const [users, setUsers] = useSubscribe("users").value();
+  const [users, setUsers] = useSubscribe(useStore(), "users").value();
 
   function replaceUsers(resultP) {
     resultP()

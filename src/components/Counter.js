@@ -1,4 +1,6 @@
 import { useSubscribe } from "../hooks";
+import { useStore } from "../StoreContext";
+
 import {
   incrementSetter,
   decrementSetter,
@@ -7,13 +9,13 @@ import {
 } from "../stateSetters";
 
 export function Counter() {
-  const [countA, setCountA] = useSubscribe("count")
+  const [countA, setCountA] = useSubscribe(useStore(), "count")
     .transform(
       (s) => s + 15,
       (s) => s - 5
     )
     .value();
-  const [countB, setCountB] = useSubscribe("count").value();
+  const [countB, setCountB] = useSubscribe(useStore(), "count").value();
 
   function onIncrementClick() {
     setCountA(incrementSetter);
