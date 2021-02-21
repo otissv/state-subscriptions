@@ -19,7 +19,7 @@ class Store extends EventEmitter {
 
   publish([event, nextState]) {
     //TODO: handle publishing multiple events
-    //TODO: want the event path and publish up the tree
+    //TODO: walk the event path and publish up the tree
 
     this.state = deepMerge(this.state)(nextState);
 

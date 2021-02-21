@@ -1,21 +1,20 @@
-import { useSubscribe } from "../hooks";
-import { useStore } from "../StoreContext";
+import { useStoreSubscribe } from "../StoreContext";
 
 import {
   incrementSetter,
   decrementSetter,
   addSetter,
-  add3Setter
+  add3Setter,
 } from "../stateSetters";
 
 export function Counter() {
-  const [countA, setCountA] = useSubscribe(useStore(), "count")
+  const [countA, setCountA] = useStoreSubscribe("count")
     .transform(
       (s) => s + 15,
       (s) => s - 5
     )
     .value();
-  const [countB, setCountB] = useSubscribe(useStore(), "count").value();
+  const [countB, setCountB] = useStoreSubscribe("count").value();
 
   function onIncrementClick() {
     setCountA(incrementSetter);

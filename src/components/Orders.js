@@ -1,17 +1,16 @@
 import React from "react";
 
-import { useSubscribe } from "../hooks";
 import { updateOrderSetter } from "../stateSetters";
-import { useStore } from "../StoreContext";
+import { useStoreSubscribe } from "../StoreContext";
 
 export function Orders() {
-  const [order, setOrder] = useSubscribe(useStore(), "order").value();
-  const setCup = useSubscribe(useStore(), "order.cup").value()[1];
+  const [order, setOrder] = useStoreSubscribe("order").value();
+  const setCup = useStoreSubscribe("order.cup").value()[1];
 
   function onUpdateOrder() {
     setOrder(
       updateOrderSetter({
-        milk: null
+        milk: null,
       })
     );
   }
@@ -22,9 +21,9 @@ export function Orders() {
       count: 999,
       order: {
         cup: {
-          size: 1
-        }
-      }
+          size: 1,
+        },
+      },
     }));
   }
   return (

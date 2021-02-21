@@ -1,16 +1,16 @@
 import React from "react";
 
 import { useFetchEffect, useSubscribe } from "../hooks";
-import { useStore } from "../StoreContext";
+import { useStoreSubscribe } from "../StoreContext";
 
 export function Users() {
-  const [users, setUsers] = useSubscribe(useStore(), "users").value();
+  const [users, setUsers] = useStoreSubscribe("users").value();
 
   function replaceUsers(resultP) {
     resultP()
       .then((data) =>
         setUsers(() => ({
-          users: data
+          users: data,
         }))
       )
       .catch(console.log);
@@ -18,7 +18,7 @@ export function Users() {
 
   useFetchEffect(
     {
-      url: "https://jsonplaceholder.typicode.com/users"
+      url: "https://jsonplaceholder.typicode.com/users",
     },
     replaceUsers
   );

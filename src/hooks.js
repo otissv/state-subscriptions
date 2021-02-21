@@ -8,12 +8,11 @@ export function publish(store, ...events) {
     const fns = Array.isArray(actions) ? actions : [actions];
 
     const nextState = pipe(...fns)(store.state);
-
     store.publish([
       type,
       {
-        [type.split(".")[0]]: store.get(type.split(".")[0], nextState)
-      }
+        [type.split(".")[0]]: store.get(type.split(".")[0], nextState),
+      },
     ]);
   });
 }
@@ -61,7 +60,7 @@ export function useSubscribe(storeRef = {}, event) {
   function dispatch(...fns) {
     publish(store, {
       type: event,
-      actions: fns
+      actions: fns,
     });
   }
 
@@ -71,9 +70,9 @@ export function useSubscribe(storeRef = {}, event) {
     transform: (...fns) => ({
       value: () => [
         fns.reduce((previousValue, fn) => fn(previousValue), state[0]),
-        dispatch
-      ]
+        dispatch,
+      ],
     }),
-    value: () => state
+    value: () => state,
   };
 }
