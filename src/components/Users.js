@@ -24,6 +24,7 @@ export function Users() {
 
   return (
     <div>
+      <h2>Users</h2>
       <UserCount count={users.length} />
       <UsersList users={users} />
     </div>

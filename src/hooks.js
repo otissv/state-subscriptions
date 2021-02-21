@@ -7,7 +7,10 @@ export function publish(store, ...events) {
   events.forEach(({ type, actions }) => {
     const fns = Array.isArray(actions) ? actions : [actions];
     //TODO: restrict state to type
+
     const nextState = pipe(...fns)(store.state);
+
+    console.log(store.get(type, nextState));
     store.publish([type, nextState]);
   });
 }

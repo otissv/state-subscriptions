@@ -12,9 +12,9 @@ class Store extends EventEmitter {
     this.initialState = initialState;
   }
 
-  get(event) {
+  get(event, state) {
     // extract state
-    return event.split(".").reduce((o, i) => o[i], this.state);
+    return event.split(".").reduce((o, i) => o[i], state || this.state);
   }
 
   publish([event, nextState]) {
@@ -24,10 +24,7 @@ class Store extends EventEmitter {
     this.state = deepMerge(this.state)(nextState);
 
     //TODO: maybe see if state has changed before emitting
-    this.emit(
-      event,
-      event.split(".").reduce((o, i) => o[i], this.state)
-    );
+    this.emit(event, this.get(event));
   }
 
   // TODO: subscribe() {}
@@ -35,10 +32,7 @@ class Store extends EventEmitter {
   broadcast(nextState) {
     this.state = deepMerge(this.state)(nextState);
     this.eventNames().forEach((event) => {
-      this.emit(
-        event,
-        event.split(".").reduce((o, i) => o[i], this.state)
-      );
+      this.emit(event, this.get(event));
     });
   }
 }
