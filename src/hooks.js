@@ -6,12 +6,15 @@ import { useStore } from "./StoreContext";
 export function publish(store, ...events) {
   events.forEach(({ type, actions }) => {
     const fns = Array.isArray(actions) ? actions : [actions];
-    //TODO: restrict state to type
 
     const nextState = pipe(...fns)(store.state);
 
-    console.log(store.get(type, nextState));
-    store.publish([type, nextState]);
+    store.publish([
+      type,
+      {
+        [type.split(".")[0]]: store.get(type.split(".")[0], nextState)
+      }
+    ]);
   });
 }
 
