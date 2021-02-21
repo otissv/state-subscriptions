@@ -12,6 +12,27 @@ export function publish(store, ...events) {
   });
 }
 
+export function useBroadcast(...fns) {
+  const store = useStore().current;
+
+  const nextState = pipe(...fns)(store.state);
+  store.broadcast(nextState);
+}
+
+export function useFetchEffect({ url, ...options }, cb) {
+  React.useEffect(() => {
+    fetch(url, options)
+      .then((res) => res.json())
+      .then((data) => cb(() => Promise.resolve(data)))
+      .catch((error) => Promise.reject(error));
+  }, []);
+}
+
+export function usePublish(...events) {
+  const store = useStore().current;
+  return publish(store, ...events);
+}
+
 export function useSubscribe(event) {
   const store = useStore().current;
 
@@ -49,16 +70,4 @@ export function useSubscribe(event) {
     }),
     value: () => state
   };
-}
-
-export function usePublish(...events) {
-  const store = useStore().current;
-  return publish(store, ...events);
-}
-
-export function useBroadcast(...fns) {
-  const store = useStore().current;
-
-  const nextState = pipe(...fns)(store.state);
-  store.broadcast(nextState);
 }

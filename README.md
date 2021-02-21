@@ -1,8 +1,6 @@
 # State Subscriptions
 
-Subscribe to properties in the store
-
-State subscriptions enables publishing and subscribing to properties in a store.
+An experiment to publish and subscribe to properties in a store.
 
 ## Store
 
@@ -65,7 +63,7 @@ const [count, setCount] = useSubscribe("count")
 
 ```js
 import { StoreProvider } from "./StoreContext";
-import { StoreProvider } from "./hooks";
+import { useSubscribe } from "./hooks";
 const initialState = {
   count: 0
 }
@@ -77,7 +75,7 @@ function App () {
 }
 
 function Counter () {
-  const [count, setCount] = useSubscribed('count)
+  const [count, setCount] = useSubscribe('count)
     // will return the value retrieved from the store with 10 added to it
       .transform(c => c + 10)
       .value()

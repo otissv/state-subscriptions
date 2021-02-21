@@ -19,7 +19,8 @@ const initialState = {
     },
     shots: 1,
     food: [0, 1, 2, 3, 4, 5]
-  }
+  },
+  users: []
 };
 
 const store = createStore(initialState);
