@@ -2,7 +2,7 @@ export function deepMerge(target) {
   const state = { ...target };
 
   function reducer(target, source) {
-    for (let prop in source) {
+    for (const prop in source) {
       if (source.hasOwnProperty(prop)) {
         if (typeof source[prop] === "function") {
           target[prop] = source[prop](state);
