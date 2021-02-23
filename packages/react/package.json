@@ -1,0 +1,86 @@
+{
+  "private": true,
+  "name": "@state-subscriptions/react",
+  "version": "0.1.0",
+  "license": "MIT",
+  "typings": "index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Otis Virginie",
+  "scripts": {
+    "start": "run-p watch storybook",
+    "build": "npm run clean && mkdir build  && node ../../scripts",
+    "watch": "tsc  --watch",
+    "test": "jest",
+    "test:coverage": "npm run build && jest --coverage",
+    "test:watch": "jest --watch",
+    "lint": "eslint . --ext .ts",
+    "fix": "eslint . --ext .ts  --fix",
+    "lint:watch": "esw . --ext .ts -w",
+    "storybook": "start-storybook -p 6006",
+    "storybook:build": "build-storybook",
+    "clean": "rm -rf ./build",
+    "prepare": "npm run build",
+    "publish": "cd build && npm publish"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "tabWidth": 2,
+    "useTabs": false,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "bracketSpacing": true,
+    "jsxBracketSameLine": false,
+    "fluid": false
+  },
+  "peerDependencies": {
+    "react": ">=17"
+  },
+  "dependencies": {
+    "@state-subscriptions/store": "^0.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "@storybook/addon-a11y": "^6.1.2",
+    "@storybook/addon-actions": "^6.1.2",
+    "@storybook/addon-docs": "^6.1.2",
+    "@storybook/addon-essentials": "^6.1.2",
+    "@storybook/addon-links": "^6.1.2",
+    "@storybook/addons": "^6.1.2",
+    "@storybook/preset-typescript": "^3.0.0",
+    "@storybook/react": "^6.1.2",
+    "@storybook/theming": "^6.1.2",
+    "@types/jest": "^26.0.9",
+    "@types/node": "^14.14.21",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.13.0",
+    "@typescript-eslint/parser": "^4.13.0",
+    "babel-loader": "^8.1.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-disable": "^2.0.1",
+    "eslint-plugin-functional": "^3.2.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-watch": "^7.0.0",
+    "husky": "^4.2.5",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.2.1",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "react-is": "^16.13.1",
+    "ts-loader": "^8.0.2",
+    "tslib": "^2.0.1",
+    "typescript": "^3.9.7"
+  },
+  "resolutions": {
+    "@types/react": "^17.0.0"
+  }
+}
