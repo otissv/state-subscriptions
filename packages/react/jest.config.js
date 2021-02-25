@@ -4,6 +4,6 @@
 /* eslint-disable functional/immutable-data */
 // eslint-disable-next-line no-undef
 
-const config = require('../jest.config')
+const config = require('../../jest.config')
 
-module.exports = config
+module.exports = { ...config, testEnvironment: 'jsdom' }

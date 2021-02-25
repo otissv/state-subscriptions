@@ -1,7 +1,8 @@
-/* eslint-disable functional/no-expression-statement */
-/* eslint-disable functional/no-return-void */
 import React from 'react'
 
+/*
+will remove
+*/
 export function useFetchEffect(
   {
     url,
