@@ -6,14 +6,11 @@ describe('storePublish', () => {
   })
   it('should publish event', () => {
     const eventType = 'test'
-    const events = [(state: any) => state]
+    const actions = [(state: any) => state]
 
-    storePublish(store)(eventType)(events)
+    storePublish(store)(eventType)(actions)
 
     expect(store.publish).toHaveBeenCalledTimes(1)
-    expect(store.publish).toHaveBeenCalledWith({
-      type: eventType,
-      actions: events,
-    })
+    expect(store.publish).toHaveBeenCalledWith([eventType, actions])
   })
 })

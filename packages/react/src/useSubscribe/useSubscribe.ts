@@ -7,15 +7,15 @@ import { useListener } from '../useListener'
 export function useSubscribe<Store extends Record<string, any>>(
   storeRef: Store
 ) {
-  return <Type extends string>(eventType: Type) => {
+  return <Type extends string>(eventName: Type) => {
     const store: Store = storeRef.current || {}
-    useListener(store)
+    useListener(store)(eventName)
 
-    const state: StateType<Partial<Store['state']>> = [
-      store.get(eventType),
-      storePublish(store)(eventType),
+    const state: StateType<Store['state']> = [
+      store.get(eventName),
+      storePublish(store)(eventName),
     ]
 
-    return getPartialStateWithAction(state)
+    return getPartialStateWithAction<Store['state']>(state)
   }
 }

@@ -1,12 +1,8 @@
-export type ActionType<State> = (state: State) => State
-
-export interface EventInterface<Type, State> {
+export interface EventInterface<Type> {
   readonly type: Type
-  readonly actions: readonly ActionType<State>[]
+  readonly actions: readonly ActionType[]
 }
 
-export type StateType<State> = readonly [State, DispatchType<State>]
-
-export type DispatchType<State> = (
-  actions: readonly ActionType<State>[]
-) => void
+export type ActionType = <Input>(state: Input) => unknown
+export type StateDispatch = (actions: readonly ActionType[]) => void
+export type StateType<StateValue> = readonly [StateValue, StateDispatch]

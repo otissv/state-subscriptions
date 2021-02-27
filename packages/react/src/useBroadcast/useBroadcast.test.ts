@@ -18,8 +18,8 @@ describe('useBroadcast', () => {
   it('should broadcast to store', () => {
     renderHook(() =>
       useBroadcast(store)([
-        (state) => ({ ...state, e1: 'e1 test next1' }),
-        (state) => ({ ...state, e1: 'e1 test next2' }),
+        (state: typeof store) => ({ ...state, e1: 'e1 test next1' }),
+        (state: typeof store) => ({ ...state, e1: 'e1 test next2' }),
       ])
     )
 

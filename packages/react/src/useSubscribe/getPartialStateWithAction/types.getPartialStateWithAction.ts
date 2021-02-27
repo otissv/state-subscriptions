@@ -1,8 +1,6 @@
-import { ActionType, DispatchType } from '../../types'
-
-export interface GetPartialStateWithActionTo<State> {
-  action: (
-    ...actions: readonly ActionType<State>[]
-  ) => GetPartialStateWithActionTo<State>
-  value: () => readonly [Partial<State>, DispatchType<State>]
+export interface GetPartialStateWithActionTo<StateValue> {
+  action: <Input, Output>(
+    action: (state: Input | StateValue) => Output
+  ) => GetPartialStateWithActionTo<StateValue>
+  value: () => readonly [StateValue, <Input>(state: Input) => void]
 }

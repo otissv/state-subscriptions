@@ -1,10 +1,11 @@
-import { ActionType } from '../../types'
-
 export function reduceActionsToPartialState<State>(state: State) {
-  return (actions: readonly ActionType<State>[] = []): Partial<State> =>
+  return (actions: ((state: any) => unknown)[] = []): unknown =>
     actions.reduce(
-      (previousValue: State, action: ActionType<State>) =>
-        typeof action === 'function' ? action(previousValue) : previousValue,
+      (previousValue: unknown, action: (state: unknown) => unknown) => {
+        return typeof action === 'function'
+          ? action(previousValue)
+          : previousValue
+      },
       state
     )
 }

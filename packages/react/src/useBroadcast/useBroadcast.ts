@@ -4,7 +4,7 @@ import { ActionType } from '../types'
 export function useBroadcast<Store extends Record<string, any>>(
   storeRef: Store
 ) {
-  return (actions: readonly ActionType<Store['state']>[]): void => {
+  return (actions: readonly ActionType[]): void => {
     const store = storeRef.current
     const nextState = pipe(...actions)(store.state)
     store.broadcast(nextState)

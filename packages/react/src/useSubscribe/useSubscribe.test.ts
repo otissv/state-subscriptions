@@ -43,9 +43,6 @@ describe('useSubscribe', () => {
       publish(actions)
     })
     expect(store.current.publish).toHaveBeenCalledTimes(1)
-    expect(store.current.publish).toHaveBeenCalledWith({
-      actions,
-      type: 'user.followers',
-    })
+    expect(store.current.publish).toHaveBeenCalledWith([type, actions])
   })
 })

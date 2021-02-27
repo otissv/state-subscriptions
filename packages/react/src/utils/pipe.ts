@@ -15,9 +15,9 @@
  * pipe(toUpper, toSnake)('Hello World!') // "HELLO_WORLD!"
  * ```
  */
-export function pipe<ReturnType>(
+export function pipe<To>(
   ...fns: readonly Function[]
-): <T>(value: T) => ReturnType {
-  return <T>(value: T): any =>
+): <From>(value: From) => To {
+  return <From>(value: From): any =>
     fns.length === 0 ? value : pipe(...fns.slice(1, fns.length))(fns[0](value))
 }
