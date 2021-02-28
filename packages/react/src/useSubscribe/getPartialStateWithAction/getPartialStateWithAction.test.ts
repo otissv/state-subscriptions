@@ -30,15 +30,15 @@ describe('getPartialStateWithAction', () => {
     const dispatch = jest.fn()
 
     expect(
-      getPartialStateWithAction<State>([state, dispatch]).value()
+      getPartialStateWithAction<State, State>([state, dispatch]).value()
     ).toEqual([{ firstName: 'Hello', lastName: 'World' }, dispatch])
   })
 
   it('should transform state with actions ', () => {
     const dispatch = jest.fn()
-    const result = getPartialStateWithAction<State>([state, dispatch])
-      .action(addFullName)
-      .action(fullNameToUpperCase)
+    const result = getPartialStateWithAction<State, State>([state, dispatch])
+      .map(addFullName)
+      .map(fullNameToUpperCase)
       .value()
 
     expect(result).toEqual([
@@ -51,53 +51,53 @@ describe('getPartialStateWithAction', () => {
     const dispatch = jest.fn()
 
     expect(
-      getPartialStateWithAction<State>([state, dispatch])
-        .action(undefined as any)
+      getPartialStateWithAction<State, State>([state, dispatch])
+        .map(undefined as any)
         .value()
     ).toEqual([{ firstName: 'Hello', lastName: 'World' }, dispatch])
     expect(
-      getPartialStateWithAction<State>([state, dispatch])
-        .action(null as any)
+      getPartialStateWithAction<State, State>([state, dispatch])
+        .map(null as any)
         .value()
     ).toEqual([{ firstName: 'Hello', lastName: 'World' }, dispatch])
     expect(
-      getPartialStateWithAction<State>([state, dispatch])
-        .action(1 as any)
+      getPartialStateWithAction<State, State>([state, dispatch])
+        .map(1 as any)
         .value()
     ).toEqual([{ firstName: 'Hello', lastName: 'World' }, dispatch])
     expect(
-      getPartialStateWithAction<State>([state, dispatch])
-        .action(2 as any)
+      getPartialStateWithAction<State, State>([state, dispatch])
+        .map(2 as any)
         .value()
     ).toEqual([{ firstName: 'Hello', lastName: 'World' }, dispatch])
     expect(
-      getPartialStateWithAction<State>([state, dispatch])
-        .action(true as any)
+      getPartialStateWithAction<State, State>([state, dispatch])
+        .map(true as any)
         .value()
     ).toEqual([{ firstName: 'Hello', lastName: 'World' }, dispatch])
     expect(
-      getPartialStateWithAction<State>([state, dispatch])
-        .action(false as any)
+      getPartialStateWithAction<State, State>([state, dispatch])
+        .map(false as any)
         .value()
     ).toEqual([{ firstName: 'Hello', lastName: 'World' }, dispatch])
     expect(
-      getPartialStateWithAction<State>([state, dispatch])
-        .action('' as any)
+      getPartialStateWithAction<State, State>([state, dispatch])
+        .map('' as any)
         .value()
     ).toEqual([{ firstName: 'Hello', lastName: 'World' }, dispatch])
     expect(
-      getPartialStateWithAction<State>([state, dispatch])
-        .action('1' as any)
+      getPartialStateWithAction<State, State>([state, dispatch])
+        .map('1' as any)
         .value()
     ).toEqual([{ firstName: 'Hello', lastName: 'World' }, dispatch])
     expect(
-      getPartialStateWithAction<State>([state, dispatch])
-        .action({} as any)
+      getPartialStateWithAction<State, State>([state, dispatch])
+        .map({} as any)
         .value()
     ).toEqual([{ firstName: 'Hello', lastName: 'World' }, dispatch])
     expect(
-      getPartialStateWithAction<State>([state, dispatch])
-        .action([] as any)
+      getPartialStateWithAction<State, State>([state, dispatch])
+        .map([] as any)
         .value()
     ).toEqual([{ firstName: 'Hello', lastName: 'World' }, dispatch])
   })

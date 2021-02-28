@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useStore } from '../../../react/src/StoreContext'
 import { useSubscribe } from '../../../react/src/useSubscribe/useSubscribe'
-import { Store as StoreInterface } from '../../../store/src/store/store'
+import { Store as StoreInterface } from '@state-subscriptions/store/store'
 
 interface Notification {
   readonly id: number
@@ -18,9 +18,10 @@ type Store = StoreInterface<State>
 
 export function Notifications(): JSX.Element {
   const useStoreSubscribe = useSubscribe<Store>(useStore())
-  const [notifications, setNotifications] = useStoreSubscribe<string>(
-    'notifications'
-  ).value()
+  const [notifications, setNotifications] = useStoreSubscribe<
+    string,
+    State['notifications']
+  >('notifications').value()
 
   const [notifyId, setNotifyId] = React.useState(0)
 

@@ -2,7 +2,7 @@
 import React from 'react'
 
 import { StoreProvider } from '../../react/src/StoreProvider'
-import { createStore } from '../../store/build/store/store'
+import { createStore } from '@state-subscriptions/store/store'
 import { Counter as CounterComponent } from './Counter'
 import { Order as OrderComponent } from './Order'
 import { Notifications as NotificationsComponent } from './Notifications'

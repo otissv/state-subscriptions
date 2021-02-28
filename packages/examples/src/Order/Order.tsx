@@ -3,7 +3,7 @@ import React from 'react'
 import { updateOrderSetter } from './orderSetters'
 import { useStore } from '../../../react/src/StoreContext'
 import { useSubscribe } from '../../../react/src/useSubscribe/useSubscribe'
-import { Store as StoreInterface } from '../../../store/src/store/store'
+import { Store as StoreInterface } from '@state-subscriptions/store/store'
 
 interface State {
   readonly order: any
@@ -13,7 +13,7 @@ type Store = StoreInterface<State>
 
 export function Order(): JSX.Element {
   const useStoreSubscribe = useSubscribe<Store>(useStore())
-  const [order, setOrder] = useStoreSubscribe<State['order'], string>(
+  const [order, setOrder] = useStoreSubscribe<string, State['order']>(
     'order'
   ).value()
   const setCup = useStoreSubscribe('order.cup').value()[1]
@@ -28,7 +28,7 @@ export function Order(): JSX.Element {
 
   function handelOnUpdateCup() {
     setCup([
-      (_state) => ({
+      (_state: State) => ({
         order: {
           cup: {
             size: 1,

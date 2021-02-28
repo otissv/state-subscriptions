@@ -4,6 +4,7 @@
   "description": "",
   "keywords": [],
   "dependencies": {},
+  "main": "index.js",
   "devDependencies": {
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.31",

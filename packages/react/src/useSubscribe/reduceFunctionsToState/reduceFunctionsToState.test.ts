@@ -1,6 +1,6 @@
-import { reduceActionsToPartialState } from './reduceActionsToPartialState'
+import { reduceFunctionsToState } from './reduceFunctionsToState'
 
-describe('reduceActionsToPartialState', () => {
+describe('reduceFunctionsToState', () => {
   it('should transform state with actions', () => {
     interface State {
       firstName: string
@@ -22,30 +22,30 @@ describe('reduceActionsToPartialState', () => {
       fullName: state.fullName && state.fullName.toUpperCase(),
     })
 
-    const actions = [addFullName, fullNameToUpperCase]
+    const functions = [addFullName, fullNameToUpperCase]
 
-    expect(reduceActionsToPartialState(state)(actions)).toEqual({
+    expect(reduceFunctionsToState(state)(functions)).toEqual({
       firstName: 'Hello',
       lastName: 'World',
       fullName: 'HELLO WORLD',
     })
   })
 
-  it('should not transform state if actions is empty', () => {
+  it('should not transform state if functions is empty', () => {
     const state = {
       firstName: 'Hello',
       lastName: 'World',
     }
-    expect(reduceActionsToPartialState(state)()).toEqual(state)
+    expect(reduceFunctionsToState(state)()).toEqual(state)
   })
 
-  it('should not transform state if action is not a function', () => {
+  it('should not transform state if not a function', () => {
     const state = {
       firstName: 'Hello',
       lastName: 'World',
     }
     expect(
-      reduceActionsToPartialState(state)([
+      reduceFunctionsToState(state)([
         { firstName: 'HELLO', lastName: 'World' },
       ] as any)
     ).toEqual(state)

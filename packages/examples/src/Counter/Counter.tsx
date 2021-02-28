@@ -1,7 +1,7 @@
 import React from 'react'
 import { useStore } from '../../../react/src/StoreContext'
 import { useSubscribe } from '../../../react/src/useSubscribe/useSubscribe'
-import { Store as StoreInterface } from '../../../store/src/store/store'
+import { Store as StoreInterface } from '@state-subscriptions/store/store'
 
 import {
   incrementSetter,
@@ -19,10 +19,10 @@ type Store = StoreInterface<State>
 export function Counter(): JSX.Element {
   const useStoreSubscribe = useSubscribe<Store>(useStore())
 
-  const [countA, setCountA] = useStoreSubscribe('count')
+  const [countA, setCountA] = useStoreSubscribe<string, State['count']>('count')
     .action((count) => (typeof count === 'number' ? count + 10 : 10))
     .value()
-  const [countB, setCountB] = useStoreSubscribe('count').value()
+  const [countB, setCountB] = useStoreSubscribe<string, number>('count').value()
 
   function onIncrementClick() {
     setCountA([incrementSetter])
