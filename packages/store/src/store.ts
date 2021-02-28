@@ -31,6 +31,11 @@ export class Store<State extends StateInterface> extends EventEmitter {
     this.onSubscribe = onSubscribe;
   }
 
+  /**
+   * Retrieves a value from the store.The `eventName` is the path to a state property.
+   *
+   * @param eventName - path to property in state
+   */
   get<EventName extends EventType>(eventName: EventName): Partial<State> {
     // extract property state
     return isEvent(eventName)
@@ -38,6 +43,11 @@ export class Store<State extends StateInterface> extends EventEmitter {
       : {};
   }
 
+  /**
+   * Merges the nextState with the stores state and emits the new state to all subscribers of the event.
+   *
+   * @param event - An event is an array with 2 items, where the first item is the eventName and the second item is a function to transform the state in to the next state.
+   */
   publish<EventName extends EventType>(
     ...events: [
       EventName,
@@ -67,17 +77,18 @@ export class Store<State extends StateInterface> extends EventEmitter {
     return this;
   }
 
+  /**
+   * Creates an event listener for a state property.
+   * @param eventName - Path to a state property.
+   * @param listener - Callback to receiving property value.
+   */
   subscribe(eventName: string, listener: (state: State) => void): this {
-    console.log(eventName);
     if (!isEvent(eventName)) {
       console.warn('Cannot subscribe without an event type');
       return this;
     } else {
       this.on(eventName, (state) => {
-        console.log('subscribe: ', state);
-
         listener(state);
-
         this.onSubscribe.forEach((fn) => fn([eventName, state]));
       });
 
@@ -86,16 +97,22 @@ export class Store<State extends StateInterface> extends EventEmitter {
   }
 
   broadcast<EventName extends EventType>(
-    actions: State | ActionType<State, State>,
+    functions: State | ActionType<State, State>,
   ): this {
     this.eventNames().forEach((eventName) => {
-      this.publish([eventName as EventName, actions]);
+      this.publish([eventName as EventName, functions]);
     });
 
     return this;
   }
 }
 
+/**
+ * Create a new instance of a store.
+ *
+ * @param preloadState - An object containing state to be preloaded into the store
+ * @param options - optional onPublish, onSubscribe
+ */
 export function createStore<State>(
   preloadState: Partial<State> = {},
   options: { onPublish?: Function[]; onSubscribe?: Function[] } = {

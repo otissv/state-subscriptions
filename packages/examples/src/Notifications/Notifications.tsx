@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { useStore } from '../../../react/src/StoreContext'
-import { useSubscribe } from '../../../react/src/useSubscribe/useSubscribe'
+import { useStore } from '@state-subscriptions/react'
+import { useSubscribe } from '@state-subscriptions/react/useSubscribe/useSubscribe'
 import { Store as StoreInterface } from '@state-subscriptions/store/store'
 
 interface Notification {

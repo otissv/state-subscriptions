@@ -2,35 +2,85 @@
 
 An experiment to publish and subscribe to properties in a store.
 
-**NOTE:** API is in constant development
+# Motivation
+
+The idea was to create a simple, small surface API for state management with the ability to subscribe to property changes in the state tree. State is treated as an external side-effect like a database would
 
 ## Store
 
-The store works by publishing and subscribing to events. An event is a path to a property in the store e.g 'user.name.filename'.
+At it's core the Store is an event emitter and follows the fire and forget principle.
 
-- `createStore(initialState)` returns a new instance of the store.
+The store works by publishing and subscribing to properties in the state tree called an event. An event is a path to a property in the state e.g 'user.name.filename'.
 
-- `get(event)` retrieves a value from the store
+### Methods
 
-- `publish(action1, action2, ... ,actionN)` merges the nextState with the stores state and emits the new state to all subscribers of the event. An action are an array with 2 items, where the 1st item is the event and the second items is a function to transform the state in the a nextState.
+- `createStore(preloadState, options?)`  
+   Creates a new instance of the store.
 
-- `broadcast(nextState)` merges the nextState with the stores state and emits the new state to every listener.
+  - preloadState - An object containing state to be
+  - options
+
+    - `onPublish`  
+      Callback function called every time an event is published
+
+    - `onSubscribe`
+    - Callback function called every time a event is received by a subscriber.
+
+- `get(eventName)`  
+  Retrieves a value from the store.The `eventName` is the path to a state property.
+
+  - eventName - path to property in state
+
+- `publish(event, event2, ... ,eventN)`
+  Merges the nextState with the stores state and emits the new state to all subscribers of the event.
+
+  - `event` - An event is an array with 2 items, where the first item is the eventName and the second item is a function to transform the state in to the next state.
+
+- `subscribe(eventName, listener)`  
+  Creates an event listener for a state property.
+
+  - `eventName` - An eventName is the path to a state property.
+  - `listener` - A listener is a callback to receive the property value.
 
 ## React
 
 To use the state subscriptions wrap the root element in side a Store Provider.
 
 ```js
-import { StoreProvider } from "./StoreContext";
+import React from 'react'
+import {
+  StoreProvider,
+  useStore,
+} from '@state-subscriptions/react/StoreContext'
+import { useSubscribe } from '@state-subscriptions/react/useSubscribe'
+import { createStore } from '@state-subscriptions/store/store'
 
 const initialState = {
-  count: 0
+  count: 0,
 }
+const store = createStore(initialState)
 
-const store = createStore(initialState);
+function Counter() {
+  const [count, setCount] = useSubscribe(useStore()).value()
 
+  function onDecrementClick() {
+    setCount([(count: number) => count - 1])
+  }
 
+  function onIncrementClick() {
+    setCount([(count: number) => count + 1])
+  }
 
+  return (
+    <div>
+      <div>
+        <button onClick={onDecrementClick}>-</button>
+        <button onClick={onIncrementClick}>+</button>
+      </div>
+      {count}
+    </div>
+  )
+}
 function App () {
   return <div>My App </div>
 }
@@ -48,24 +98,25 @@ The StoreProvider caches the store in a `useRef` hook. Unlike `useState`, `useRe
 
 ### Subscriptions
 
-`useSubscribe(event)` to subscribe to a property in the store.
-Whenever the property changes the subscription is updated with the new value.
+- `useSubscribe(storeRef)(event)` subscribes to a property in state.
 
-To retrieve the value from useSubscribe you must call value `useSubscribe("count").value()`, which return an array where the first item is the state and the second item is a function to update the property in the store.
+To retrieve the value from useSubscribe you must call value `useSubscribe(storeRef)(event).value()`, which returns an array where the first item is the state and the second item is a function to update the property in the store.
 
-An option transform function can be added which takes a list of transform arguments to transform the state. `transform` does not change the state in the store.
+An option `map` function can be added which takes a list of transform arguments to transform the state. `map` does not change the state in the store only the returned value.
 
 ```js
-const [count, setCount] = useSubscribe("count")
-  .transform((state) => state + 10)
+const [count, setCount] = useSubscribe(storeRef)("count")
+  .map((count) => count + 10)
   .value();
 ```
 
 ## Example
 
 ```js
-import { StoreProvider } from "./StoreContext";
-import { useSubscribe } from "./hooks";
+import { StoreProvider, useStore } from "@state-subscriptions/react/StoreContext";
+import { useSubscribe } from "@state-subscriptions/react/useSubscribe";
+import { createStore } from '@state-subscriptions/store/store'
+
 const initialState = {
   count: 0
 }
@@ -77,7 +128,7 @@ function App () {
 }
 
 function Counter () {
-  const [count, setCount] = useSubscribe('count)
+  const [count, setCount] = useSubscribe(store('count)
     // will return the value retrieved from the store with 10 added to it
       .transform(c => c + 10)
       .value()

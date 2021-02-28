@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react'
 
-import { StoreProvider } from '../../react/src/StoreProvider'
+import { StoreProvider } from '@state-subscriptions/react/StoreProvider'
 import { createStore } from '@state-subscriptions/store/store'
 import { Counter as CounterComponent } from './Counter'
 import { Order as OrderComponent } from './Order'

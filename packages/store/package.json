@@ -25,15 +25,14 @@
   "scripts": {
     "dev": "run-p watch test:watch",
     "watch": "tsc --watch",
-    "build": "tsc",
+    "build": "npm run clean && mkdir dist  && node ../../scripts",
     "lint": "eslint . --ext .ts",
     "test": "jest",
     "test:coverage": "npm run build && jest --coverage",
     "test:watch": "jest --watch",
     "docs": "npm run build && typedoc src/index.ts",
-    "generate": "npm run clean && mkdir dist  && node ../../scripts",
     "clean": "rm -rf ./dist",
-    "prepare": "npm run generate",
+    "prepare": "npm run build",
     "publish": "cd dist && npm publish"
   },
   "browserslist": [

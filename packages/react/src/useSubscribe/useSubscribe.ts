@@ -4,6 +4,10 @@ import { getPartialStateWithAction } from './getPartialStateWithAction'
 import { storePublish } from './storePublish'
 import { useListener } from '../useListener'
 
+/**
+ *
+ * @param storeRef
+ */
 export function useSubscribe<Store extends Record<string, any>>(
   storeRef: Store
 ) {
